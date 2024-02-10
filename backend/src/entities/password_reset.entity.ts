@@ -11,6 +11,12 @@ export class PasswordReset {
   @Column('text')
   public token: string
 
+  @Column({
+    type: "boolean",
+    default: false
+  })
+  is_deleted: boolean
+
   @CreateDateColumn({
     type: 'timestamp',
     name: 'created_at',

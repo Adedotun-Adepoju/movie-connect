@@ -2,13 +2,23 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { SignInInterface, SignUpInterface } from './interfaces/auth.interface';
 import { ResponseInterface } from 'src/helper/response.helper';
 import { UserService } from '../user/user.service';
+import { PasswordReset } from 'src/entities/password_reset.entity';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/entities/user.entity';
+import { Repository } from 'typeorm';
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+
+    @InjectRepository(PasswordReset)
+    private passwordResetRepo:Repository<PasswordReset>,
+
+    @InjectRepository(User)
+    private userRepo:Repository<User>,
   ){}
 
   async signUp(payload: SignUpInterface): Promise<ResponseInterface>{
@@ -67,4 +77,35 @@ export class AuthService {
     const { password, ...result } = user 
     return result
   }
+
+  async resetPassword(token: string, newPassword: string) {
+    if(!newPassword || !token){
+      throw new HttpException("Please provide new password and token", HttpStatus.FORBIDDEN)
+    }
+    
+    const passwordReset = await this.passwordResetRepo.findOne({
+      where: {
+        token: token,
+        is_deleted: false
+      }
+    })
+
+    if(!passwordReset){
+      throw new HttpException("Invalid token", HttpStatus.FORBIDDEN)
+    }
+
+    const user = await this.userService.findUserByEmail(passwordReset.email)
+
+    user.password = await bcrypt.hash(newPassword, 10)
+    await this.userRepo.save(user)
+    passwordReset.is_deleted = true 
+    await this.passwordResetRepo.save(passwordReset)
+
+    return {
+      status: "success",
+      statusCode: 200,
+      message: "Password reset successfully",
+      data: []
+    }
+  } 
 }
