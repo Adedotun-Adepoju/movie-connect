@@ -8,11 +8,14 @@ import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
+import { MailService } from '../mail/mail.service';
+import * as uuid from 'uuid';
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
+    private mailService: MailService,
 
     @InjectRepository(PasswordReset)
     private passwordResetRepo:Repository<PasswordReset>,
@@ -76,6 +79,65 @@ export class AuthService {
 
     const { password, ...result } = user 
     return result
+  }
+
+  async sendPasswordResetLink(email: string) {
+    console.log("here")
+    // Check if mail exists
+    const user = await this.userRepo.findOne({
+      where: {
+        email: email
+      }
+    })
+
+    if(!user){
+      throw new HttpException(
+        "Email does not exist",
+        HttpStatus.NOT_FOUND
+      )
+    }
+
+    // check if there is an existing password reset
+    const passwordReset = await this.passwordResetRepo.findOne({
+      where: {
+        email: email,
+        is_deleted: false
+      }
+    })
+
+    if (passwordReset){
+      passwordReset.is_deleted = true 
+      await this.passwordResetRepo.save(passwordReset)
+    }
+
+    const token = uuid.v4();
+
+    // Create new record for password reset
+    const newReset = this.passwordResetRepo.create({
+      email, 
+      token
+    })
+
+    await this.passwordResetRepo.save(newReset)
+
+    // Send mail
+    const mailPayload = {
+      recipient: email,
+      subject: "Password Reset",
+      template: "password-reset",
+      data: {
+        name: `${user.first_name} ${user.last_name}`,
+        url: `${process.env.FRONTEND_WEB_URL}/auth/password-reset/${token}`
+      }
+    }
+
+    await this.mailService.sendMail(mailPayload)
+    return {
+      status: "success",
+      statusCode: 200,
+      message: "Password reset email sent successfully",
+      data: []
+    }
   }
 
   async resetPassword(token: string, newPassword: string) {
