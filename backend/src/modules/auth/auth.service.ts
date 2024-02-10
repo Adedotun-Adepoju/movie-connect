@@ -49,7 +49,20 @@ export class AuthService {
     }
   }
 
-  async validateUser() {
+  async validateUser(payload: SignInInterface) {
+    const user = await this.userService.findUserByEmail(payload.email);
 
+    if(!user) {
+      return null
+    }
+
+    const isPasswordValid = await bcrypt.compare(payload.password, user.password)
+
+    if(!isPasswordValid) {
+      return null 
+    }
+
+    const { password, ...result } = user 
+    return result
   }
 }
