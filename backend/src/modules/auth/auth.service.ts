@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { SignUpInterface } from './interfaces/auth.interface';
+import { SignInInterface, SignUpInterface } from './interfaces/auth.interface';
 import { ResponseInterface } from 'src/helper/response.helper';
-
+import { UserService } from '../user/user.service';
 @Injectable()
 export class AuthService {
-  constructor(){}
+  constructor(
+    private userService: UserService
+  ){}
 
   async signUp(payload: SignUpInterface): Promise<ResponseInterface>{
-    console.log({ payload })
 
     return {
       status: "success",
@@ -17,8 +18,10 @@ export class AuthService {
     }
   }
 
-  async signIn(payload) {
+  async signIn(payload: SignInInterface) {
+    const email = payload.email;
 
+    const user = await this.userService.findUserByEmail(email)
     return {
       status: "success",
       status_code: 200,
