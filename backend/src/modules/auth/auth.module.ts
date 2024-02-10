@@ -6,11 +6,17 @@ import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from 'src/guards/local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from '../../guards/jwt.strategy';
-
+import { PasswordReset } from 'src/entities/password_reset.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from 'src/entities/user.entity';
+import { MailModule } from '../mail/mail.module';
+import { MailService } from '../mail/mail.service';
 @Module({
   imports: [
     UserModule,
     PassportModule,
+    MailModule,
+    TypeOrmModule.forFeature([PasswordReset, User]),
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET_KEY,
@@ -18,6 +24,6 @@ import { JwtStrategy } from '../../guards/jwt.strategy';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy]
+  providers: [AuthService, LocalStrategy, JwtStrategy, MailService]
 })
 export class AuthModule {}
