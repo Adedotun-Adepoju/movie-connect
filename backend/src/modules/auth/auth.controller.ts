@@ -1,8 +1,8 @@
-import { Body, Controller, HttpException, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, HttpException, HttpStatus, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto, SignUpDto } from './dto/auth.dto';
 import { ResponseHelper, ResponseInterface } from 'src/helper/response.helper';
-
+import { LocalAuthGuard } from 'src/guards/local-auth.guard';
 @Controller('auth')
 export class AuthController {
   constructor (
@@ -19,6 +19,7 @@ export class AuthController {
     }
   }
 
+  @UseGuards(LocalAuthGuard)
   @Post('sign-in')
   async signIn(@Body() signInDto: SignInDto){
     try {
