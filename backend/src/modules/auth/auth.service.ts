@@ -82,7 +82,6 @@ export class AuthService {
   }
 
   async sendPasswordResetLink(email: string) {
-    console.log("here")
     // Check if mail exists
     const user = await this.userRepo.findOne({
       where: {
