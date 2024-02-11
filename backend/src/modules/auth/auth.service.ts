@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 import { MailService } from '../mail/mail.service';
+import { EmailVerification } from 'src/entities/email_verification.entity';
 import * as uuid from 'uuid';
 @Injectable()
 export class AuthService {
@@ -22,6 +23,9 @@ export class AuthService {
 
     @InjectRepository(User)
     private userRepo:Repository<User>,
+
+    @InjectRepository(EmailVerification)
+    private emailVerificationRepo:Repository<EmailVerification>,
   ){}
 
   async signUp(payload: SignUpInterface): Promise<ResponseInterface>{
@@ -168,5 +172,75 @@ export class AuthService {
       message: "Password reset successfully",
       data: []
     }
-  } 
+  }
+  
+  async verifyEmail (emailId: string) {
+    const verification = await this.emailVerificationRepo.findOne({
+      where: { id: emailId }
+    });
+    if (!verification) throw new HttpException({message: 'Email verification does not exist'}, 404)
+    await this.emailVerificationRepo.update(
+      { id: emailId },
+      { status: 'verified' },
+    );
+    return {
+      statusCode: 200,
+      status: 'success',
+      message: 'Email verified successfully',
+      data: verification,
+    } 
+  }
+
+  async checkEmailVerification (email: string) {
+    const verification = await this.emailVerificationRepo.findOne({
+      where: { email }
+    });
+    if (verification && verification.status !== "verified") {
+      throw new HttpException({message: 'Email not verified'}, 400)
+    }
+    return {
+      status: "success",
+      message: "Email Verified Successfully",
+      statusCode: 200,
+      data: {},
+    }
+  }
+
+
+  async resendVerificationLink (email: string) {
+    const verification = await this.emailVerificationRepo.findOne({
+      where: { email }
+    });
+    if (!verification) {
+      throw new HttpException({message: 'Email verification not found'}, 404)
+    }
+    const user = await this.userRepo.findOneBy({
+      id: verification.user_id,
+    });
+    const organization = await this.organizationRepo.findOne({
+      where: {
+        id: user.organization_id,
+      },
+    });
+    await this.sendEmailVerification(verification.email, organization.organization_name, verification.id)
+    return {
+      status: "success",
+      message: "Email link has been sent successfully",
+      statusCode: 200,
+      data: {},
+    }
+  }
+
+  async sendEmailVerification (email: string, organization_name: string, email_id: string) {
+    const mailPayload = {
+      receipient: email,
+      subject: "Email verification",
+      template: "email-verification",
+      data: {
+        name: organization_name,
+        url: `${process.env.WEB_URL}/auth?email_id=${email_id}`,
+      }
+    }
+    await this.mailService.sendMail(mailPayload)
+  }
 }
