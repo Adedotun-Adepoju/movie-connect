@@ -5,9 +5,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { FacebookIcon, GoogleIcon } from "../icons";
-import { loginSchema } from "@/utils/zodSchemas";
+import { LoginType, loginSchema } from "@/utils/zodSchemas";
 import InputFieldContainer from "./InputFieldContainer";
 import Checkbox from "./CheckBox";
+import Link from "next/link";
 
 const LoginForm = () => {
   const [isDirty, setDirty] = useState(false);
@@ -18,7 +19,7 @@ const LoginForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<any>({
+  } = useForm<LoginType>({
     resolver: zodResolver(loginSchema),
     mode: "onChange",
   });
@@ -33,7 +34,7 @@ const LoginForm = () => {
 
   return (
     <>
-      <h2 className="mb-8 mt-16 text-center font-sfpro text-4xl font-bold">
+      <h2 className="mb-8 text-center font-sfpro text-4xl font-bold">
         Sign in to your account
       </h2>
       <form
@@ -89,19 +90,19 @@ const LoginForm = () => {
         <div className="flex justify-between">
           <Checkbox id="remember_me" label="Remember me" register={register} />
 
-          <a
-            href="#"
+          <Link
+            href="/recover"
             className="text-lg font-semibold text-dark transition-all duration-200 ease-in-out hover:text-primary"
           >
             Forgot password?
-          </a>
+          </Link>
         </div>
 
         <input
           type="submit"
           value="Login"
           disabled={isSubmitting}
-          className="mt-6 w-full rounded-lg border-2 border-primary bg-primary px-6 py-3 font-semibold text-white transition-all duration-200 ease-in-out hover:bg-white hover:text-primary disabled:cursor-not-allowed disabled:opacity-50 "
+          className="input_submit mt-6"
         />
       </form>
       <div>
