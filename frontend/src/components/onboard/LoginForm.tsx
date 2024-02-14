@@ -71,7 +71,7 @@ const LoginForm = () => {
               {...register("password")}
               className="input_field"
             />
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-dark">
+            <div className="input_field_icon">
               {showPassword ? (
                 <AiOutlineEyeInvisible
                   className="h-5 w-5 cursor-pointer"
