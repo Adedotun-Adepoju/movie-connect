@@ -5,15 +5,15 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  // @Get()
-  // getHello(): string {
-  //   return this.appService.getHello();
-  // }
-
   @Get()
-  @Render('templates/email-verification')
-  root(){
-    return { first_name: "Adedotun", last_name: "Adepoju"}
+  getHello(): string {
+    return this.appService.getHello();
   }
+
+  // @Get()
+  // @Render('templates/password-reset')
+  // root(){
+  //   return { first_name: "", last_name: ""}
+  // }
 
 }
