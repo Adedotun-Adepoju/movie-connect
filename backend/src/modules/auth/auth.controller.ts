@@ -16,6 +16,7 @@ export class AuthController {
       const res: ResponseInterface = await this.authService.signUp(signUpDto)
       return ResponseHelper.successResponse(res.message, res.status_code, res.data)
     } catch(error) {
+      console.log(error)
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
@@ -62,7 +63,7 @@ export class AuthController {
   }
 
   @Post('/resend-email-verification-link')
-  async resendVerificationLink (@Body() resendVerificationLinkDto: ResendVerificationLinkDto ) {
+  async resendVerificationLink (@Body() resendVerificationLinkDto ) {
     try {
       const { email } = resendVerificationLinkDto;
       const { statusCode, message, data } =

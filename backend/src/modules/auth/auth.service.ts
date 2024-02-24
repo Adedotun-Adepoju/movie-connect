@@ -9,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 import { MailService } from '../mail/mail.service';
-import { EmailVerification } from 'src/entities/email_verification.entity';
+import { EmailVerification, VerificationStatus } from 'src/entities/email_verification.entity';
 import * as uuid from 'uuid';
 @Injectable()
 export class AuthService {
@@ -40,6 +40,17 @@ export class AuthService {
     payload.password = hashedPassword
 
     const newUser = await this.userService.createUser(payload)
+
+    // send email verification
+    const emailVerification = this.emailVerificationRepo.create({
+      user_id: newUser.id,
+      email: newUser.email,
+      status: VerificationStatus.NOT_VERIFIED
+    });
+
+    await this.emailVerificationRepo.save(emailVerification);
+
+    await this.sendEmailVerification(newUser.email, newUser.first_name, emailVerification.id)
 
     return {
       status: "success",
@@ -217,12 +228,8 @@ export class AuthService {
     const user = await this.userRepo.findOneBy({
       id: verification.user_id,
     });
-    const organization = await this.organizationRepo.findOne({
-      where: {
-        id: user.organization_id,
-      },
-    });
-    await this.sendEmailVerification(verification.email, organization.organization_name, verification.id)
+
+    await this.sendEmailVerification(verification.email, user.first_name, verification.id)
     return {
       status: "success",
       message: "Email link has been sent successfully",
@@ -231,16 +238,17 @@ export class AuthService {
     }
   }
 
-  async sendEmailVerification (email: string, organization_name: string, email_id: string) {
+  async sendEmailVerification (email: string, first_name: string, email_id: string) {
     const mailPayload = {
-      receipient: email,
+      recipient: email,
       subject: "Email verification",
       template: "email-verification",
       data: {
-        name: organization_name,
-        url: `${process.env.WEB_URL}/auth?email_id=${email_id}`,
+        name: first_name,
+        url: `${process.env.FRONTEND_WEB_URL}/auth?email_id=${email_id}`,
       }
     }
+    console.log({ mailPayload })
     await this.mailService.sendMail(mailPayload)
   }
 }

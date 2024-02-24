@@ -51,6 +51,7 @@ export class MailService {
         year: new Date().getFullYear()
     };
 
+    console.log({ mailOptions })
     const send = await this.transporter.sendMail(mailOptions);
   }
 }
