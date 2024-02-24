@@ -11,12 +11,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { MailModule } from '../mail/mail.module';
 import { MailService } from '../mail/mail.service';
+import { EmailVerification } from '../../entities/email_verification.entity';
 @Module({
   imports: [
     UserModule,
     PassportModule,
     MailModule,
-    TypeOrmModule.forFeature([PasswordReset, User]),
+    TypeOrmModule.forFeature([PasswordReset, User, EmailVerification]),
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET_KEY,

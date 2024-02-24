@@ -1,4 +1,4 @@
-import { Body, Controller, HttpException, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ForgotPasswordDto, ResetPasswordDto, SignInDto, SignUpDto } from './dto/auth.dto';
 import { ResponseHelper, ResponseInterface } from 'src/helper/response.helper';
@@ -16,6 +16,7 @@ export class AuthController {
       const res: ResponseInterface = await this.authService.signUp(signUpDto)
       return ResponseHelper.successResponse(res.message, res.status_code, res.data)
     } catch(error) {
+      console.log(error)
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
@@ -48,6 +49,39 @@ export class AuthController {
       return ResponseHelper.successResponse(message, statusCode, data)
     } catch(error) {
       throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @Get('/verify-email/:email_verification_id')
+  async verifyEmail(@Param('email_verification_id') emailVerificationId: string) {
+    try {
+      const { statusCode, message, data, status } = await this.authService.verifyEmail(emailVerificationId);
+      return ResponseHelper.successResponse(message, statusCode, data);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @Post('/resend-email-verification-link')
+  async resendVerificationLink (@Body() resendVerificationLinkDto ) {
+    try {
+      const { email } = resendVerificationLinkDto;
+      const { statusCode, message, data } =
+        await this.authService.resendVerificationLink(email);
+      return ResponseHelper.successResponse(message, statusCode, data);
+    } catch (err) {
+      throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @Get('/check_email_verification/:email')
+  async checkEmailVerification (@Param('email') email: string ) {
+    try {
+      const { statusCode, message, data } =
+        await this.authService.checkEmailVerification(email);
+        return ResponseHelper.successResponse(message, statusCode, data);
+    } catch (err) {
+      throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
     }
   }
 }

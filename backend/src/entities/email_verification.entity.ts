@@ -22,6 +22,9 @@ export class EmailVerification {
   @Column()
   public email: string
 
+  @Column()
+  public user_id: string
+
   @Column({
     type: "enum",
     enum: VerificationStatus,

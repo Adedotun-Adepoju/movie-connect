@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 import { MailService } from '../mail/mail.service';
+import { EmailVerification, VerificationStatus } from 'src/entities/email_verification.entity';
 import * as uuid from 'uuid';
 @Injectable()
 export class AuthService {
@@ -22,6 +23,9 @@ export class AuthService {
 
     @InjectRepository(User)
     private userRepo:Repository<User>,
+
+    @InjectRepository(EmailVerification)
+    private emailVerificationRepo:Repository<EmailVerification>,
   ){}
 
   async signUp(payload: SignUpInterface): Promise<ResponseInterface>{
@@ -36,6 +40,17 @@ export class AuthService {
     payload.password = hashedPassword
 
     const newUser = await this.userService.createUser(payload)
+
+    // send email verification
+    const emailVerification = this.emailVerificationRepo.create({
+      user_id: newUser.id,
+      email: newUser.email,
+      status: VerificationStatus.NOT_VERIFIED
+    });
+
+    await this.emailVerificationRepo.save(emailVerification);
+
+    await this.sendEmailVerification(newUser.email, newUser.first_name, newUser.last_name, emailVerification.id)
 
     return {
       status: "success",
@@ -168,5 +183,72 @@ export class AuthService {
       message: "Password reset successfully",
       data: []
     }
-  } 
+  }
+  
+  async verifyEmail (emailId: string) {
+    const verification = await this.emailVerificationRepo.findOne({
+      where: { id: emailId }
+    });
+    if (!verification) throw new HttpException({message: 'Email verification does not exist'}, 404)
+    await this.emailVerificationRepo.update(
+      { id: emailId },
+      { status: 'verified' },
+    );
+    return {
+      statusCode: 200,
+      status: 'success',
+      message: 'Email verified successfully',
+      data: verification,
+    } 
+  }
+
+  async checkEmailVerification (email: string) {
+    const verification = await this.emailVerificationRepo.findOne({
+      where: { email }
+    });
+    if (verification && verification.status !== "verified") {
+      throw new HttpException({message: 'Email not verified'}, 400)
+    }
+    return {
+      status: "success",
+      message: "Email Verified Successfully",
+      statusCode: 200,
+      data: {},
+    }
+  }
+
+
+  async resendVerificationLink (email: string) {
+    const verification = await this.emailVerificationRepo.findOne({
+      where: { email }
+    });
+    if (!verification) {
+      throw new HttpException({message: 'Email verification not found'}, 404)
+    }
+    const user = await this.userRepo.findOneBy({
+      id: verification.user_id,
+    });
+
+    await this.sendEmailVerification(verification.email, user.first_name, user.last_name, verification.id)
+    return {
+      status: "success",
+      message: "Email link has been sent successfully",
+      statusCode: 200,
+      data: {},
+    }
+  }
+
+  async sendEmailVerification (email: string, first_name: string, last_name, email_id: string) {
+    const mailPayload = {
+      recipient: email,
+      subject: "Email verification",
+      template: "email-verification",
+      data: {
+        first_name: first_name,
+        last_name: last_name,
+        url: `${process.env.WEB_URL}/auth?email_id=${email_id}`,
+      }
+    }
+    await this.mailService.sendMail(mailPayload)
+  }
 }

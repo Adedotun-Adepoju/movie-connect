@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>B54</title>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -21,15 +20,26 @@
         padding: 0;
       }
       .main-mail-section {
-        width: 500px;
+        width: 700px;
         margin: 0 auto;
+        padding-top: 30px;
+      }
+      .navbar{
+        display: flex;
+        justify-content: space-between;
       }
       .navbar > img {
-        width: 100%;
+        width: 25%;
+        height: 56px;
+      }
+
+      .navbar > p {
+        color: #787878;
+        font-size: 16px;
       }
 
       .footer {
-        margin: 45px 0 25px 0;
+        margin: 0px 0 25px 0;
       }
 
       .footer > div {
@@ -40,81 +50,11 @@
         color: rgba(35, 31, 32, 0.6);
       }
 
-      .best-regards {
-        color: rgba(35, 31, 32, 0.9);
-        margin: 0;
-      }
-
-      .bank-54-name {
-        /* font-family: 'Acumin Variable Concept'; */
-        font-family: acumin-pro, sans-serif;
-        font-weight: 700;
-        font-size: 18px;
-        line-height: 21px;
-        margin: 0;
-        margin-top: 5px;
-      }
-
       a {
         color: #4576C2;
         text-decoration: none;
         cursor: pointer;
       }
-
-      .social-links {
-        display: flex;
-      }
-
-      .social-links a {
-        margin: 10px 25px 10px 0;
-      }
-
-      .logo {
-        margin: 15px 0;
-      }
-
-      .logo-section {
-        width: fit-content;
-        margin: 50px auto;
-      }
-
-      /* Table Styling */
-      .table {
-        width: 100%;
-        margin: 40px auto;
-        border: 2px solid #EaEaEa;
-        border-radius: 8px;
-        padding: 15px;
-      }
-
-      tbody {
-        width: 100%;
-      }
-
-      tr {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 0;
-        margin: 10px 0;
-        border-bottom: 2px solid #EaEaEa;
-      }
-
-      tr:last-child {
-        border-bottom: none;
-        padding: 10px 0 0 0;
-      }
-
-      th {
-        font-size: 14px;
-        font-weight: 500;
-      }
-
-      td {
-        font-weight: 300;
-      }
-
-      /* --------Common Styles----------- */
-
       .main-title {
         font-size: 28px;
         line-height: 33px;
@@ -126,12 +66,22 @@
         font-size: 18px;
         line-height: 24px;
         font-weight: 500;
+        text-align: center;
+        color: #3a3a3a;
+      }
+
+      .sub-text {
+        color: #3a3a3a;
+        text-align: center ;
+        line-height: 24px;
+        font-size: 17px;
       }
 
       .text {
         font-size: 16px;
         line-height: 24px;
-        font-weight: 300;
+        font-weight: 500;
+        margin-bottom: 40px;
       }
 
       .image {
@@ -140,12 +90,12 @@
 
       .btn-container {
         text-align: center;
-        margin: 35px 0;
+        margin: 25px 0;
       }
 
       a.btn {
         text-decoration: none;
-        background-color: #0B8F99;
+        background-color: #B71C1C;
         color: #fff;
         font-size: 15px;
         line-height: 18px;
@@ -184,12 +134,9 @@
   <body>
     <div class="main-mail-section">
       <div class="navbar">
-        <img src="https://bank54.ams3.digitaloceanspaces.com/EmailTemplateImages/Top-Section.png">
+        <img src="https://res.cloudinary.com/doyesz3jg/image/upload/v1708773455/Movie-connect_ox9ttl.png">
       </div>
       <div class="main-section">
-        <div class="logo-section">
-          <img src="https://bank54.ams3.digitaloceanspaces.com/EmailTemplateImages/Logo-Section.png">
-        </div>
         <div class="container">
           {{{body}}}
         </div>
@@ -198,40 +145,14 @@
         <hr>
         <div>
           <p class="footer-text">
-            Please do not share your login credentials with anyone and avoid clicking on suspicious links.
+           If you have any questions or need assistance, don't hesitate to reach out to our support team at info@movieconnect.com. We're here to help!
           </p>
           <p class="footer-text">
-            For more inquiries contact our customer care at <a href="mailto:cs@b54.co">cs@b54.co</a>
-            or call +1 415 967 1589.
+            Thank you for choosing movie connect. We're excited to embark on this journey with you
           </p>
-        </div>
-        <div></div>
-        <div>
-          <p class="best-regards">Best Regards,</p>
-          <p class="bank-54-name">Team B54</p>
-        </div>
-        <div>
-          <p class="footer-text">This is a system generated message. Do not reply.</p>
-        </div>
-        <hr>
-        <div class="last-section">
-          <div class="social-links">
-            <div>
-              <a href="#" target="_blank"><img src="https://bank54.ams3.digitaloceanspaces.com/EmailTemplateImages/Twitter-Logo.png"></a>
-            </div>
-            <div>
-              <a href="#" target="_blank"><img src="https://bank54.ams3.digitaloceanspaces.com/EmailTemplateImages/Facebook-Logo.png"></a>
-            </div>
-            <div>
-              <a href="#" target="_blank"><img src="https://bank54.ams3.digitaloceanspaces.com/EmailTemplateImages/LinkedIn-Logo.png"></a>
-            </div>
-          </div>
-          <div class="logo">
-            <img src="https://bank54.ams3.digitaloceanspaces.com/EmailTemplateImages/B54-Logo.png">
-          </div>
-          <div>
-            <p class="footer-text">Copyright © {{year}} B54</p>
-          </div>
+          <p class="footer-text">
+            Best regards.
+          </p>
         </div>
       </div>
     </div>

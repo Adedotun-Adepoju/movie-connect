@@ -50,7 +50,6 @@ export class MailService {
         context: data,
         year: new Date().getFullYear()
     };
-
     const send = await this.transporter.sendMail(mailOptions);
   }
 }

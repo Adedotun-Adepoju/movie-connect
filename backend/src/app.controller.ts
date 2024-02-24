@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Render } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -9,4 +9,11 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  // @Get()
+  // @Render('templates/password-reset')
+  // root(){
+  //   return { first_name: "", last_name: ""}
+  // }
+
 }
