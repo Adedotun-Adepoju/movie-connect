@@ -50,7 +50,7 @@ export class AuthService {
 
     await this.emailVerificationRepo.save(emailVerification);
 
-    await this.sendEmailVerification(newUser.email, newUser.first_name, emailVerification.id)
+    await this.sendEmailVerification(newUser.email, newUser.first_name, newUser.last_name, emailVerification.id)
 
     return {
       status: "success",
@@ -229,7 +229,7 @@ export class AuthService {
       id: verification.user_id,
     });
 
-    await this.sendEmailVerification(verification.email, user.first_name, verification.id)
+    await this.sendEmailVerification(verification.email, user.first_name, user.last_name, verification.id)
     return {
       status: "success",
       message: "Email link has been sent successfully",
@@ -238,17 +238,17 @@ export class AuthService {
     }
   }
 
-  async sendEmailVerification (email: string, first_name: string, email_id: string) {
+  async sendEmailVerification (email: string, first_name: string, last_name, email_id: string) {
     const mailPayload = {
       recipient: email,
       subject: "Email verification",
       template: "email-verification",
       data: {
-        name: first_name,
-        url: `${process.env.FRONTEND_WEB_URL}/auth?email_id=${email_id}`,
+        first_name: first_name,
+        last_name: last_name,
+        url: `${process.env.WEB_URL}/auth?email_id=${email_id}`,
       }
     }
-    console.log({ mailPayload })
     await this.mailService.sendMail(mailPayload)
   }
 }
