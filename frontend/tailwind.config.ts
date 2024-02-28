@@ -17,7 +17,11 @@ const config: Config = {
         primary: "#b71c1c",
         dark: "#3a3a3a",
         light: "#fafafa",
+        warning: "#cc0000",
         "gray-fill": "#ebebeb",
+      },
+      screens: {
+        xs: "425px",
       },
     },
   },

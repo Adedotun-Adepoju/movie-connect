@@ -8,7 +8,7 @@ type CheckboxProps = {
 
 const Checkbox: React.FC<CheckboxProps> = ({ id, label, register }) => {
   return (
-    <div className="flex items-center">
+    <div className="flex cursor-pointer items-center">
       <input
         type="checkbox"
         id={id}
@@ -27,7 +27,10 @@ const Checkbox: React.FC<CheckboxProps> = ({ id, label, register }) => {
       >
         <polyline points="20 6 9 17 4 12"></polyline>
       </svg>
-      <label htmlFor={id} className="ml-2 text-lg font-semibold text-dark">
+      <label
+        htmlFor={id}
+        className="xs:text-base ml-2 text-sm font-semibold lg:text-lg"
+      >
         {label}
       </label>
     </div>

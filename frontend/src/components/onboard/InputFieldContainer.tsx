@@ -16,7 +16,7 @@ const InputFieldContainer = ({
     <div className="mb-4">
       <label
         htmlFor={id}
-        className="mb-2 block text-lg font-semibold text-dark"
+        className="mb-2 block text-lg font-semibold text-light lg:text-dark"
       >
         {label}
       </label>

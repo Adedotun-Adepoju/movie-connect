@@ -7,12 +7,13 @@ import { useForm } from "react-hook-form";
 import InputFieldContainer from "./InputFieldContainer";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import Link from "next/link";
+import ResendLinkButton from "../shared/ResendLinkButton";
 
 const BackToLogin = () => {
   return (
     <Link
       href="/login"
-      className="mt-6 flex items-center gap-2 p-3 text-center font-sfpro text-lg text-primary"
+      className=" flex items-center justify-center gap-2 p-3 text-center font-sfpro text-lg text-primary"
     >
       <IoMdArrowRoundBack /> Back to login
     </Link>
@@ -45,7 +46,7 @@ const RecoverForm = () => {
 
   if (isSubmitSuccessful)
     return (
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center text-light lg:text-dark">
         <div className="mb-8 flex h-24 w-24 items-center justify-center rounded-full bg-primary">
           <svg
             width="80"
@@ -67,14 +68,11 @@ const RecoverForm = () => {
         <p className="text-center text-lg">
           We've sent you an email with a recovery link. Please check your inbox
         </p>
-        <div className="flex items-center justify-between">
-          <BackToLogin />
-          <Link
-            href="#"
-            className="mt-6 flex items-center gap-2 p-3 text-center font-sfpro text-lg text-primary"
-          >
-            Resend recovery link
-          </Link>
+        <div className="xs:flex-row mx-auto mt-6 flex w-full max-w-md flex-col items-center justify-between">
+          <button className="xs:w-1/2 w-full items-center">
+            <BackToLogin />
+          </button>
+          <ResendLinkButton />
         </div>
       </div>
     );

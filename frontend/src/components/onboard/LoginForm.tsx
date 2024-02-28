@@ -34,8 +34,8 @@ const LoginForm = () => {
 
   return (
     <>
-      <h2 className="mb-8 text-center font-sfpro text-4xl font-bold">
-        Sign in to your account
+      <h2 className="mb-8 text-center font-sfpro text-4xl font-bold text-light lg:text-dark">
+        Sign in<span className="hidden md:inline">&nbsp;to your account</span>
       </h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -87,12 +87,12 @@ const LoginForm = () => {
           </span>
         </InputFieldContainer>
 
-        <div className="flex justify-between">
+        <div className="flex justify-between text-light lg:text-dark">
           <Checkbox id="remember_me" label="Remember me" register={register} />
 
           <Link
             href="/recover"
-            className="text-lg font-semibold text-dark transition-all duration-200 ease-in-out hover:text-primary"
+            className="xs:text-base text-sm font-semibold transition-all duration-200 ease-in-out hover:text-primary lg:text-lg"
           >
             Forgot password?
           </Link>
@@ -111,16 +111,16 @@ const LoginForm = () => {
           <span className="mx-3 text-xl text-gray-500">Or continue with:</span>
           <span className="flex h-px w-16 flex-1 bg-gray-fill"></span>
         </div>
-        <div className="flex items-center justify-between gap-8">
-          <button className="flex h-12 w-1/2 items-center justify-center gap-2 rounded-lg border border-dark bg-transparent font-semibold text-dark transition-all duration-200 ease-in-out hover:bg-white hover:text-primary">
+        <div className="xs:flex-row flex flex-col items-center justify-between gap-8 text-light lg:text-dark">
+          <button className="xs:w-1/2 line-clamp-1 flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-light bg-transparent px-4 py-2 font-semibold transition-all duration-200 ease-in-out hover:bg-white hover:text-primary lg:border-dark lg:text-dark">
             <GoogleIcon /> Login with Google
           </button>
-          <button className="flex h-12 w-1/2 items-center justify-center gap-2 rounded-lg border border-dark bg-transparent font-semibold text-dark transition-all duration-200 ease-in-out hover:bg-white hover:text-primary">
+          <button className="xs:w-1/2 line-clamp-1 flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-light bg-transparent px-4 py-2 font-semibold transition-all duration-200 ease-in-out hover:bg-white hover:text-primary lg:border-dark lg:text-dark">
             <FacebookIcon /> Login with Facebook
           </button>
         </div>
         <div>
-          <p className="mt-8 text-center text-dark">
+          <p className="mt-8 text-center text-light lg:text-dark">
             Don't have an account?{" "}
             <a
               href="#"
