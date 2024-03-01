@@ -9,7 +9,6 @@ import { TypeOrmConfigService } from './shared/typeorm/typeorm.service';
 import { MailModule } from './modules/mail/mail.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-console.log(join(__dirname, 'assets'))
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }), 
