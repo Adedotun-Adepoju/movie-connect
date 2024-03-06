@@ -67,3 +67,21 @@ export const FIlterIcon = () => {
 
   )
 }
+
+export const ShortArrowLeftIcon = () => {
+  return (
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="15" cy="15" r="15" fill="#D9D9D9"/>
+    <path d="M17 11L13 15L17 19" stroke="#B71C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+export const ShortArrowRightIcon = () => {
+  return (
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="15" cy="15" r="15" fill="#D9D9D9"/>
+    <path d="M13 19L17 15L13 11" stroke="#B71C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}

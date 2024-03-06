@@ -19,6 +19,7 @@ const config: Config = {
         light: "#fafafa",
         warning: "#cc0000",
         "gray-fill": "#ebebeb",
+        trending: "#818080"
       },
       screens: {
         xs: "425px",
