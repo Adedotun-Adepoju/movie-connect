@@ -52,3 +52,18 @@ export const FacebookIcon = () => (
     </defs>
   </svg>
 );
+
+export const FIlterIcon = () => {
+  return (
+    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19 10.5V4.5" stroke="#B71C1C" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M19 14.5V20.5" stroke="#B71C1C" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M12 16.5V4.5" stroke="#B71C1C" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M5 8.5V20.5" stroke="#B71C1C" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M5 8.5C6.10457 8.5 7 7.60457 7 6.5C7 5.39543 6.10457 4.5 5 4.5C3.89543 4.5 3 5.39543 3 6.5C3 7.60457 3.89543 8.5 5 8.5Z" stroke="#B71C1C" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M12 20.5C13.1046 20.5 14 19.6046 14 18.5C14 17.3954 13.1046 16.5 12 16.5C10.8954 16.5 10 17.3954 10 18.5C10 19.6046 10.8954 20.5 12 20.5Z" stroke="#B71C1C" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M19 14.5C20.1046 14.5 21 13.6046 21 12.5C21 11.3954 20.1046 10.5 19 10.5C17.8954 10.5 17 11.3954 17 12.5C17 13.6046 17.8954 14.5 19 14.5Z" stroke="#B71C1C" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+
+  )
+}
