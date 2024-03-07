@@ -26,7 +26,7 @@ const TopNav = () => {
             <nav className="flex flex-row items-center gap-x-6">
             {navLinks.map((item, index) => (
                 <Link href={item.link} key={index}>
-                    <p className="active:border-b-2 border-primary pb-2 font-medium">{item.label}</p>
+                    <p className="active:border-b-2 active:border-primary pb-2 font-medium">{item.label}</p>
                 </Link>
             ))}
             </nav>

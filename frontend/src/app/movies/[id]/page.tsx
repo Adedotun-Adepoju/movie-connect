@@ -1,14 +1,15 @@
-import { RedArrowIcon } from "../icons"
-import YoutubeEmbed from "../shared/YoutubeEmbed"
-import Disclaimer from "./disclaimer"
+import Link from "next/link"
+import { RedArrowIcon } from "@/components/icons"
+import YoutubeEmbed from "@/components/shared/YoutubeEmbed"
+import Disclaimer from "@/components/movies/disclaimer"
 const WatchMovie = () => {
     return (
-        <div className="flex flex-row justify-center font-sfpro mt-10">
-            <div className="border-r-2 border-black w-7/12 flex flex-col gap-y-4">
-                <h2 className="flex flex-row items-center text-base font-bold text-primary">
+        <div className="flex flex-row justify-center font-sfpro pt-10">
+            <div className="border-r-2 border-grey-600 w-7/12 h-screen flex flex-col gap-y-4">
+                <Link href='/movies' className="flex flex-row items-center text-base font-bold text-primary">
                     <RedArrowIcon />
                     Back to movies
-                </h2>
+                </Link>
                 <YoutubeEmbed embedLink="https://www.youtube.com/embed/KDrrCy6F1EI?si=CkaQfKGVcr7KsIO5" />
                 <div>
                     <h2 className="text-black text-xl font-bold ">Synopsis</h2>
