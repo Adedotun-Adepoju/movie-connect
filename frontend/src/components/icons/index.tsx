@@ -85,3 +85,11 @@ export const ShortArrowRightIcon = () => {
     </svg>
   )
 }
+
+export const RedArrowIcon = () => {
+  return (
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M28 14L18 24L28 34" stroke="#B71C1C" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
