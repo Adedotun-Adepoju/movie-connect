@@ -93,3 +93,74 @@ export const RedArrowIcon = () => {
     </svg>
   )
 }
+
+export const SearchIcon = () => {
+  return (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z" stroke="#3A3A3A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M22.1248 21.7499L15.8032 15.8032" stroke="#3A3A3A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+  )
+}
+
+export const AlarmIcon = () => {
+  return (
+    <svg width="24" height="26" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 19.6665V20.9998C8 21.5252 8.10347 22.0453 8.30448 22.5306C8.50551 23.0158 8.80013 23.4568 9.17157 23.8282C9.54307 24.1997 9.984 24.4944 10.4692 24.6953C10.9545 24.8964 11.4747 24.9998 12 24.9998C12.5253 24.9998 13.0455 24.8964 13.5308 24.6953C14.016 24.4944 14.4569 24.1997 14.8284 23.8282C15.1999 23.4568 15.4945 23.0158 15.6955 22.5306C15.8965 22.0453 16 21.5252 16 20.9998V19.6665" stroke="#3A3A3A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M22.6668 19.6667C22.6668 19.6667 20.0002 13 20.0002 9C20.0002 4.64267 16.3575 1 12.0002 1C7.64283 1 4.00016 4.64267 4.00016 9C4.00016 14.3333 1.3335 19.6667 1.3335 19.6667H22.6668Z" stroke="#3A3A3A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+
+  )
+}
+
+export const ProfileIcon = () => {
+  return (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 4C9.37259 4 4 9.37259 4 16C4 22.6275 9.37259 28 16 28C22.6275 28 28 22.6275 28 16C28 9.37259 22.6275 4 16 4Z" stroke="#3A3A3A" strokeWidth="2"/>
+    <path d="M16 16C18.2092 16 20 14.2092 20 12C20 9.79087 18.2092 8 16 8C13.7908 8 12 9.79087 12 12C12 14.2092 13.7908 16 16 16Z" stroke="#3A3A3A" strokeWidth="2"/>
+    <path d="M8 24.9444C8 22.7848 9.56229 20 12 20H20C22.4377 20 24 22.7848 24 24.9444" stroke="#3A3A3A" strokeWidth="2"/>
+    </svg>
+
+  )
+}
+
+export const ArrowUp = () => {
+  return (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M22.6668 18.6667L16.0002 12L9.3335 18.6667" stroke="#3A3A3A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+
+  )
+}
+
+export const ArrowupRed = () => {
+  return (
+    <svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M23.1668 18.6667L16.5002 12L9.8335 18.6667" stroke="#B71C1C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+export const SideIcons = ({icon}: {icon: string}) => {
+   switch(icon) {
+     case 'home' :
+      return (
+        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clipPath="url(#clip0_158_13180)">
+        <path d="M13.5 2.09961L1.5 12H4.77273V21H12.4091V15H14.5909V21H22.2273V12H25.5L13.5 2.09961ZM13.5 4.79102L20.0455 10.1914V11V19H16.7727V13H10.2273V19H6.95455V10.1914L13.5 4.79102Z" fill="#3A3A3A"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_158_13180">
+        <rect width="24" height="24" fill="white" transform="translate(0.5)"/>
+        </clipPath>
+        </defs>
+        </svg>
+      );
+      case 'range' : 
+      return (
+        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21.5 7L13.5 15L9.5 11L3.5 17" stroke="#3A3A3A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M15.5 7H21.5V13" stroke="#3A3A3A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      )
+   }
+}
