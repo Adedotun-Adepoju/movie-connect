@@ -4,6 +4,7 @@ import Link from "next/link"
 import { AlarmIcon, ArrowUp, ProfileIcon, SearchIcon } from "../icons"
 import UserProfile from "./userProfile"
 import { useState } from "react"
+import NotificationDropdown from "./notification"
 const TopNav = () => {
     const navLinks = [
         {
@@ -42,7 +43,7 @@ const TopNav = () => {
                 </div>
                 <div className="relative flex flex-col items-center cursor-pointer">
                     <p className="flex flex-row items-center gap-x-2" onClick={() => dropdown === '' ? setDropdown('alarm'): setDropdown('')}> <AlarmIcon /> 5</p>
-                    {dropdown === 'alarm' ? <UserProfile /> : ''}
+                    {dropdown === 'alarm' ? <NotificationDropdown /> : ''}
                 </div>
                 <div className="relative flex flex-col items-center cursor-pointer">
                     <p className="flex flex-row items-center gap-x-2" onClick={() => dropdown === '' ? setDropdown('profile'): setDropdown('')}> <ProfileIcon /> </p> 
