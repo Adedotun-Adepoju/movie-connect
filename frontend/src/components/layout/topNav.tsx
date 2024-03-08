@@ -5,6 +5,7 @@ import { AlarmIcon, ArrowUp, ProfileIcon, SearchIcon } from "../icons"
 import UserProfile from "./userProfile"
 import { useState } from "react"
 import NotificationDropdown from "./notification"
+import RecentSearch from "./recentSearch"
 const TopNav = () => {
     const navLinks = [
         {
@@ -38,8 +39,8 @@ const TopNav = () => {
             </nav>
             <div className="flex flex-row items-center gap-x-8">
                 <div className="relative flex flex-col items-center cursor-pointer">
-                    <p className="flex flex-row items-center gap-x-2" onClick={() => dropdown === '' ? setDropdown('search'): setDropdown('')}> <SearchIcon /> Search</p>
-                    {dropdown === 'search' ? <UserProfile /> : ''}
+                    <p className="flex flex-row items-center gap-x-2 font-bold" onClick={() => dropdown === '' ? setDropdown('search'): setDropdown('')}> <SearchIcon /> <input type="search" placeholder="Search" className="font-bold rounded-2xl py-2 px-2 h-12 text-primary bg-ash focus:outline-none"/> </p>
+                    {dropdown === 'search' ? <RecentSearch /> : ''}
                 </div>
                 <div className="relative flex flex-col items-center cursor-pointer">
                     <p className="flex flex-row items-center gap-x-2" onClick={() => dropdown === '' ? setDropdown('alarm'): setDropdown('')}> <AlarmIcon /> 5</p>
