@@ -140,6 +140,16 @@ export const ArrowupRed = () => {
     </svg>
   )
 }
+
+export const SignoutIcon = () => {
+  return (
+    <svg width="41" height="40" viewBox="0 0 41 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M25.5 6.66663H30.5C32.341 6.66663 33.8333 8.15901 33.8333 9.99996V30C33.8333 31.841 32.341 33.3333 30.5 33.3333H25.5" stroke="#B71C1C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M13.8333 13.3333L7.16666 19.9999L13.8333 26.6666" stroke="#B71C1C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M7.16666 20H27.1667" stroke="#B71C1C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
 export const SideIcons = ({icon}: {icon: string}) => {
    switch(icon) {
      case 'home' :
