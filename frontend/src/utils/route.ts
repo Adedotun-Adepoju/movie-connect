@@ -41,11 +41,11 @@ export const topicsRoute = [
 export const resourceRoute = [
     {
         label: 'Contact Us',
-        link: ''
+        link: '/contact'
     },
     {
         label: 'Quick links',
-        link: ''
+        link: '/quick'
     },
     {
         label: 'Social handles',
@@ -56,5 +56,25 @@ export const resourceRoute = [
         link: ''
     },
 ]
-
-export const Languages = ['English', 'Spanish', 'French', 'Arabic', 'Italian']
+export const Languages = [
+    {
+        label: 'English',
+        link: ''
+    },
+    {
+        label: 'Spanish',
+        link: ''
+    },
+    {
+        label: 'French',
+        link: ''
+    },
+    {
+        label: 'Arabic',
+        link: ''
+    },
+    {
+        label: 'Itaian',
+        link: ''
+    },
+]
