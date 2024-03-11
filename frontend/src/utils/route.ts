@@ -78,3 +78,25 @@ export const Languages = [
         link: ''
     },
 ]
+export const mobileFootRoute = [
+    {
+        label: 'Home',
+        icon: 'home',
+        link: '/',
+    },
+    {
+        label: 'Community',
+        icon: 'community',
+        link: '/community',
+    },
+    {
+        label: 'Post',
+        icon: 'post',
+        link: '/',
+    },
+    {
+        label: 'Movies',
+        icon: 'movies',
+        link: '/movies',
+    },
+]

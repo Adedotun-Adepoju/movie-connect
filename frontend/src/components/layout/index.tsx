@@ -1,6 +1,7 @@
 import { ReactNode } from "react"
 import SideNav from "./sideNav"
 import TopNav from "./topNav"
+import MobileFooter from "./mobileFooter"
 
 const MainLayout = ({children}: {children: ReactNode}) => {
     return (
@@ -10,6 +11,7 @@ const MainLayout = ({children}: {children: ReactNode}) => {
              <SideNav />
              {children}
            </div>
+           <MobileFooter />
         </div>
     )
 }

@@ -7,6 +7,7 @@ import { useState } from "react"
 import NotificationDropdown from "./notification"
 import RecentSearch from "./recentSearch"
 import MobileNav from "./mobileNav"
+import { mobileFootRoute } from "@/utils/route"
 const TopNav = () => {
     const navLinks = [
         {
@@ -29,8 +30,7 @@ const TopNav = () => {
     const [dropdown, setDropdown] = useState('')
     const [nav, showNav] = useState(false)
     return (
-        <>
-        {nav ?  <MobileNav /> :
+        <div className="relative flex flex-col">
         <header className="flex flex-row lg:w-12/12 justify-around lg:justify-between items-center lg:px-16 py-8 font-sfpro border-b-2 border-grey-500">
             <Image src='/images/profile.png' alt="user-avi" width={32} height={32} className="lg:hidden" onClick={() => showNav(!nav)}/>
             <Image src='/images/logo.svg' alt="movie-connect logo" width={208} height={58} className="hidden lg:flex"/>
@@ -56,8 +56,9 @@ const TopNav = () => {
                 </div>
                 <p className="lg:flex lg:flex-row lg:items-center lg:gap-x-2 hidden"> NG <ArrowUp /> </p>
             </div>
-        </header>  }
-        </>
+        </header> 
+        {nav ?  <MobileNav closeNav={() => showNav(!nav)}/> : ''  }
+        </div>
     )
 }
 export default TopNav

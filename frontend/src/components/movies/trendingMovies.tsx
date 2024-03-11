@@ -20,7 +20,7 @@ const TrendingMovies = () => {
         },
     ]
     return (
-        <div className="font-sfpro flex flex-col w-12/12 pb-6 lg:bg-trending lg:pt-6 lg:pb-20 lg:px-10">
+        <div className="font-sfpro flex flex-col w-12/12 lg:w-11/12 pb-6 lg:bg-trending lg:pt-6 lg:pb-20 lg:px-10">
             <div className="hidden lg:flex lg:flex-row lg:justify-between lg:px-6">
                 <h2 className="text-white font-bold text-xl">Trending Movies</h2>
                 <div className="hidden lg:flex flex-row gap-x-1">

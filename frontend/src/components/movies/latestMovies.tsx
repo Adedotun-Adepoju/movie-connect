@@ -49,13 +49,13 @@ const LatestMovies = () => {
                 {latest.map((item, index) => (
                     <Link href={`/movies${item.link}`} key={index} className="flex flex-col w-12/12 m-auto mb-8 lg:w-6/12 gap-y-2">
                         <Image src={item.image} alt="movie thumbnail" width={504} height={256} />
-                        <h2 className="text-black font-bold text-base">{item.name}</h2>
-                        <span className="text-black text-base">{item.type}</span>
-                        <p className="text-gray-400 text-sm w-12/12">{item.summary}</p>
+                        <h2 className="text-black font-bold text-base ml-4">{item.name}</h2>
+                        <span className="text-black text-base ml-4">{item.type}</span>
+                        <p className="text-gray-400 text-sm w-11/12 self-center">{item.summary}</p>
                         <input
                             type="submit"
                             value="PLAY NOW"
-                            className="bg-primary text-white w-12/12 lg:w-5/12 mt-2 lg:mt-6 rounded-2xl p-2"
+                            className="bg-primary text-white w-11/12 self-center lg:self-start lg:ml-4 lg:w-5/12 mt-2 lg:mt-6 rounded-2xl p-2"
                         />
                     </Link>
                 ))}                
