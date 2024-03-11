@@ -5,7 +5,6 @@ const Movies = () => {
     return (
         <div>
            <LatestMovies />
-           <TrendingMovies />
         </div>
     )
 }
