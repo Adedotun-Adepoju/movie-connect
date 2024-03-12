@@ -1,0 +1,1 @@
+export const movieGenres = ['All','Hollywood', 'Nollywood', 'Comedy', 'Bollywood', 'Horror', 'Drama', 'Science-fiction (Sci-fi)', 'Documentary', 'Biography']

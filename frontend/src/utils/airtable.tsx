@@ -8,3 +8,20 @@ export const airtable = axios.create({
         Authorization: `Bearer ${airtableToken}`,
     }
 })
+
+export type latestMoviesSchema = [
+    {
+        id: '',
+        fields: {
+            Movietype: '',
+            Name: '',
+            Summary: '',
+            YoutubeLink: '',
+            Image: [
+                {
+                    url: "";
+                },
+            ]
+        }
+    }
+]
