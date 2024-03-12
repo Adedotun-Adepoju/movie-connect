@@ -25,3 +25,19 @@ export type latestMoviesSchema = [
         }
     }
 ]
+
+export type trendingMoviesSchema = [
+    {
+        id: '',
+        fields: {
+            Name: '',
+            Summary: '',
+            YoutubeLink: '',
+            Image: [
+                {
+                    url: "";
+                },
+            ]
+        }
+    }
+]
