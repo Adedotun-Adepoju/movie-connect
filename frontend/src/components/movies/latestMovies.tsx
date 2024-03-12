@@ -2,21 +2,27 @@
 import Link from "next/link"
 import { FIlterIcon } from "../icons"
 import Image from "next/image"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import TrendingMovies from "./trendingMovies"
 import { airtable, latestMoviesSchema } from "../../utils/airtable"
 import { movieGenres } from "@/utils/movieGenre"
+import { movieContext, setMovieContext } from "./movieContext"
 const LatestMovies = () => {
-    const [latestMovies, setLatestMovies] = useState<latestMoviesSchema>()
+    const movieDetails = useContext(movieContext)
+    const setMovieDetails = useContext(setMovieContext)
     const latestMovieId = process.env.NEXT_PUBLIC_AIRTBALE_LATESTMOVIE_ID
+
     const getLatestMovies = () => {
         airtable.get(`/${latestMovieId}`)
-        .then((response) => (setLatestMovies(response.data.records)))
+        .then((response) => (setMovieDetails?.setMovies(response.data.records)))
         .catch((error) => console.error(error))
     }
+
     useEffect(() => {
         getLatestMovies()
     }, [])
+
+
     const mobileTabs = ['Latest','Trending', 'Upcoming']
     const [activeTab, setActiveTab] = useState<string>('Latest')
     const [genres, showGenres] = useState(false)
@@ -24,7 +30,7 @@ const LatestMovies = () => {
 
     const getMovieGenres = (genres: string) => {
         airtable.get(`/${latestMovieId}?filterByFormula=AND(%7BTag%7D+%3D+'${genres}')`)
-        .then((response) => ((setLatestMovies(response.data.records), setGenresTab(genres))))
+        .then((response) => ((setMovieDetails?.setMovies(response.data.records), setGenresTab(genres))))
         .catch((error) => (console.error(error)))
         .finally(() => showGenres(!genres))
     }
@@ -53,7 +59,7 @@ const LatestMovies = () => {
             <div className="w-screen lg:w-11/12 lg:flex lg:flex-col lg:self-center">
                 {activeTab === 'Latest' &&             
                 <div className="flex flex-col justify-center m-auto gap-y-6 w-12/12 lg:flex lg:flex-row lg:items-center lg:gap-x-2">
-                {latestMovies?.map((item, index) => (
+                {movieDetails?.map((item, index) => (
                     <Link href={`/movies/${item.id}`} key={index} className="flex flex-col w-12/12 m-auto mb-8 lg:w-6/12 gap-y-2">
                         <Image src={item.fields.Image[0].url} alt="movie thumbnail" width={504} height={256} className="w-11/12 self-center"/>
                         <h2 className="text-black font-bold text-base ml-4">{item.fields.Name}</h2>
