@@ -3,6 +3,7 @@ import { Montserrat, Pacifico } from "next/font/google";
 import Local from "next/font/local";
 import "@/styles/globals.css";
 import { cx } from "@/utils";
+import MainLayout from "@/components/layout";
 
 const sfpro = Local({
   src: [
@@ -58,7 +59,7 @@ export default function RootLayout({
           "bg-bg-color font-mont",
         )}
       >
-        {children}
+       <MainLayout> {children} </MainLayout>
       </body>
     </html>
   );

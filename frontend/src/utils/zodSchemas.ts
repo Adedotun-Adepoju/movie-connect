@@ -8,7 +8,18 @@ export const loginSchema = z.object({
   remember_me: z.boolean().optional(),
 });
 
+export const SignupsSchema = z.object({
+  email: z.string().email({ message: "Invalid email address" }),
+  Fname: z.string().email({message: "Fill in your first name"}),
+  Lname: z.string().email({message: "Fill in your last name"}),  
+  password: z
+  .string()
+  .min(10, { message: "Password should be at least 10 characters long" }),
+remember_me: z.boolean().optional(),
+})
+
 export type LoginType = z.infer<typeof loginSchema>;
+export type SignupType = z.infer<typeof  SignupsSchema>
 
 export const recoverSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),

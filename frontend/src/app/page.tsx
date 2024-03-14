@@ -1,10 +1,10 @@
 import Image from "next/image";
+import MainLayout from "@/components/layout";
 
 export default function Home() {
   return (
     <main>
-      <h1 className="font-pacifico text-6xl text-primary font-bold">Movie connect</h1>
-      <p className="italic font-bold">This is a movie community app</p>
+      <Image src='/images/logo.svg' width={200} height={200} alt="image"/>
     </main>
   );
 }
