@@ -10,8 +10,8 @@ export const loginSchema = z.object({
 
 export const SignupsSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
-  Fname: z.string().email({message: "Fill in your first name"}),
-  Lname: z.string().email({message: "Fill in your last name"}),  
+  first_name: z.string().refine(value => value.trim() !== '', {message: "Fill in your first name"}),
+  last_name: z.string().refine(value => value.trim() !== '', {message: "Fill in your first name"}),  
   password: z
   .string()
   .min(10, { message: "Password should be at least 10 characters long" }),

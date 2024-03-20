@@ -44,8 +44,8 @@ const LoginForm = () => {
     .then((response) => (
       router.push('/'),
       setActiveUser?.setUser(response.data.data.user),
-      sessionStorage.setItem('user',JSON.stringify(response.data.data.user)),
-      data.remember_me ? localStorage.setItem('auth', JSON.stringify(data)) : ''
+      sessionStorage.setItem('user',JSON.stringify(response.data.data.user))
+      // data.remember_me ? localStorage.setItem('auth', JSON.stringify(data)) : ''
     ))
     .catch((error) => setError('password', { message: error.response.data.message }))
   };

@@ -9,27 +9,33 @@ import { SignupType, SignupsSchema } from "@/utils/zodSchemas";
 import InputFieldContainer from "../../../components/onboard/InputFieldContainer";
 import Checkbox from "../../../components/onboard/CheckBox";
 import Link from "next/link";
-
+import { Api } from "@/utils";
+import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { setUserContext } from "@/components/context/userContext";
 const SignupForm = () => {
   const [isDirty, setDirty] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
+  const router = useRouter()
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setError,
     reset,
   } = useForm<SignupType>({
     resolver: zodResolver(SignupsSchema),
     mode: "onChange",
   });
-
+  const setActiveUser = useContext(setUserContext)
   const onSubmit = async (data: any) => {
-    try {
-      console.log(data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    Api.post('auth/sign-up', data)
+    .then((response) => (
+      router.push('/'),
+      setActiveUser?.setUser(response.data.data),
+      sessionStorage.setItem('user',JSON.stringify(response.data.data))
+    ))
+    .catch((error) => (setError('first_name', { message: error.response.data.message }), console.error(error)))
   };
 
   return (
@@ -46,28 +52,28 @@ const SignupForm = () => {
           <InputFieldContainer
             label="First Name"
             id="Fname"
-            error={errors.email?.message as string | undefined}
+            error={errors.first_name?.message as string | undefined}
           >
             <input
               type="text"
               id="Fname"
               autoComplete="firstname"
               placeholder="Jonathan"
-              {...register("Fname")}
+              {...register("first_name")}
               className="input_field"
             />
           </InputFieldContainer>
           <InputFieldContainer
             label="Last Name"
             id="Lname"
-            error={errors.email?.message as string | undefined}
+            error={errors.last_name?.message as string | undefined}
           >
             <input
               type="text"
               id="Lname"
               autoComplete="firstname"
               placeholder="White"
-              {...register("Lname")}
+              {...register("last_name")}
               className="input_field"
             />
           </InputFieldContainer>
