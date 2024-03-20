@@ -5,7 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { join } from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, { cors: true },);
   const port = process.env.PORT
   app.setBaseViewsDir(join(__dirname, 'modules', 'mail', 'views',));
   app.set('view options', { layout: 'layouts/main' });
