@@ -15,6 +15,9 @@ export const SignupsSchema = z.object({
   password: z
   .string()
   .min(10, { message: "Password should be at least 10 characters long" }),
+  password2: z
+  .string()
+  .min(10, { message: "Password should be at least 10 characters long" }),
 remember_me: z.boolean().optional(),
 })
 

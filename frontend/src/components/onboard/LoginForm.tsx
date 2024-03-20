@@ -149,7 +149,7 @@ const LoginForm = () => {
           <p className="mt-8 text-center text-light lg:text-dark">
             Don't have an account?{" "}
             <a
-              href="#"
+              href="/register"
               className="hover:text-secondary font-semibold text-primary transition-all duration-200 ease-in-out"
             >
               Sign up

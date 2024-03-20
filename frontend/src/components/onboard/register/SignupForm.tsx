@@ -132,10 +132,10 @@ const SignupForm = () => {
           <span className="relative w-full">
             <input
               type={showPassword ? "text" : "password"}
-              id="password"
+              id="password2"
               autoComplete="current-password"
               placeholder="********"
-              {...register("password")}
+              {...register("password2")}
               className="input_field"
             />
             <div className="input_field_icon">
@@ -186,7 +186,7 @@ const SignupForm = () => {
           <p className="mt-8 text-center text-dark">
             Already have an account?{" "}
             <a
-              href="#"
+              href="/login"
               className="hover:text-secondary font-semibold text-primary transition-all duration-200 ease-in-out"
             >
               Sign in
