@@ -4,9 +4,10 @@ type CheckboxProps = {
   id: string;
   label: string;
   register: any;
+  value?: boolean
 };
 
-const Checkbox: React.FC<CheckboxProps> = ({ id, label, register }) => {
+const Checkbox: React.FC<CheckboxProps> = ({ id, label, register, value }) => {
   return (
     <div className="flex cursor-pointer items-center">
       <input
@@ -14,6 +15,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ id, label, register }) => {
         id={id}
         {...register(id)}
         className="input_field_checkbox peer"
+        value={value}
       />
       <svg
         className="input_field_checkmark"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -9,28 +9,54 @@ import { LoginType, loginSchema } from "@/utils/zodSchemas";
 import InputFieldContainer from "./InputFieldContainer";
 import Checkbox from "./CheckBox";
 import Link from "next/link";
-
+import { Api } from "@/utils";
+import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { setUserContext } from "../context/userContext";
+import { AxiosError } from "axios";
 const LoginForm = () => {
   const [isDirty, setDirty] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
+  const router = useRouter()
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, },
+    setError,
     reset,
   } = useForm<LoginType>({
     resolver: zodResolver(loginSchema),
     mode: "onChange",
   });
+  const setActiveUser = useContext(setUserContext)
 
-  const onSubmit = async (data: any) => {
-    try {
-      console.log(data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
+  
+  // const authDetails = localStorage.getItem('auth')
+  // const [authReminder, setAuthReminder] = useState<{
+  //   email: '',
+  //   password: '',
+  //   remember_me: boolean
+  // }>()
+
+  
+  const onSubmit = (data: any) => {
+    Api.post('auth/sign-in', data)
+    .then((response) => (
+      router.push('/'),
+      setActiveUser?.setUser(response.data.data.user),
+      sessionStorage.setItem('user',JSON.stringify(response.data.data.user)),
+      data.remember_me ? localStorage.setItem('auth', JSON.stringify(data)) : ''
+    ))
+    .catch((error) => setError('password', { message: error.response.data.message }))
   };
+
+  // useEffect(() => {
+  //   if(authDetails) {
+  //     console.log(JSON.parse(authDetails))
+  //     setAuthReminder(JSON.parse(authDetails))
+  //   }
+  // }, [])
+
 
   return (
     <>

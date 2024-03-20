@@ -7,7 +7,15 @@ const nextConfig = {
             hostname: 'v5.airtableusercontent.com',
           },
         ],
-      }
+      },
+      async rewrites() {
+        return [
+          {
+            source: '/api/auth/sign-in',
+            destination: 'https://movie-connect.up.railway.app/auth/sign-in',
+          },
+        ]
+      },
 };
 
 export default nextConfig;

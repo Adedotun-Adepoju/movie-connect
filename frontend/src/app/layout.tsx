@@ -4,6 +4,7 @@ import Local from "next/font/local";
 import "@/styles/globals.css";
 import { cx } from "@/utils";
 import MainLayout from "@/components/layout";
+import UserProvider from "@/components/context/userContext";
 
 const sfpro = Local({
   src: [
@@ -59,7 +60,7 @@ export default function RootLayout({
           "bg-bg-color font-mont",
         )}
       >
-       <MainLayout> {children} </MainLayout>
+       <UserProvider> {children} </UserProvider>
       </body>
     </html>
   );

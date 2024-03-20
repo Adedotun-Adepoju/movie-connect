@@ -8,6 +8,8 @@ import NotificationDropdown from "./notification"
 import RecentSearch from "./recentSearch"
 import MobileNav from "./mobileNav"
 import { mobileFootRoute } from "@/utils/route"
+import { useContext } from "react"
+import { userContext } from "../context/userContext"
 const TopNav = () => {
     const navLinks = [
         {
