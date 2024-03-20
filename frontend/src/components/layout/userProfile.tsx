@@ -8,8 +8,6 @@ import { useRouter } from "next/navigation"
 const UserProfile = () => {
     const profileLinks = ['Profile', 'My Communities', 'Settings', 'Help Center']
     const contextData = useContext(userContext)
-    const sessionData = sessionStorage.getItem('user')
-
     const user = contextData
     const router = useRouter()
     return (
