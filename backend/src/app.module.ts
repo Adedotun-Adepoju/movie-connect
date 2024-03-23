@@ -9,6 +9,7 @@ import { TypeOrmConfigService } from './shared/typeorm/typeorm.service';
 import { MailModule } from './modules/mail/mail.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { CommunityModule } from './modules/community/community.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }), 
@@ -18,6 +19,7 @@ import { join } from 'path';
       useClass: TypeOrmConfigService
     }),
     MailModule,
+    CommunityModule,
   ],
   controllers: [AppController],
   providers: [AppService],
