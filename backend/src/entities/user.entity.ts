@@ -11,6 +11,7 @@ import {
 import { EmailVerification } from "./email_verification.entity";
 import { UserCommunity } from "./user_communities.entity";
 import { Post } from "./posts.entity";
+import { PostLikes } from "./post_likes.entity";
 
 @Entity({ name: "users"})
 @Unique(['email'])
@@ -54,4 +55,7 @@ export class User {
 
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[]
+
+  @OneToMany(() => PostLikes, (postLikes) => postLikes.user)
+  post_likes: PostLikes[]
 }

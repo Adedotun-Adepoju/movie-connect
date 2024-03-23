@@ -5,7 +5,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
-  JoinColumn
+  JoinColumn,
+  ManyToOne
 } from "typeorm";
 
 import { Post } from "./posts.entity";
@@ -42,11 +43,11 @@ export class PostLikes {
   })
   public updated_at: Date;
 
-  @OneToOne(() => Post)
-  @JoinColumn({ name: "post_id"})
-  post: Post
-
-  @OneToOne(() => User)
+  @ManyToOne(() => User, (user) => user.post_likes)
   @JoinColumn({ name: "user_id"})
   user: User
+
+  @ManyToOne(() => Post, (post) => post.post_likes)
+  @JoinColumn({ name: "post_id"})
+  post: Post
 }

@@ -1,9 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from 'src/entities/posts.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { Community } from 'src/entities/community.entity';
 import { UserService } from '../user/user.service';
+import { PostLikes } from 'src/entities/post_likes.entity';
 
 @Injectable()
 export class PostService {
@@ -13,6 +14,9 @@ export class PostService {
 
     @InjectRepository(Community)
     private communityRepo: Repository<Community>,
+
+    @InjectRepository(PostLikes)
+    private postLikesRepo: Repository<PostLikes>,
 
     private userService: UserService,
   ){}
@@ -123,6 +127,59 @@ export class PostService {
       status_code: 200,
       message: "Posts retrieved successfully",
       data: existingPosts
+    }
+  }
+
+  async likePost(userId: string, postId: string) {
+    const existingPostLike = await this.postLikesRepo.findOne({
+      where: {
+        post_id: postId,
+        user_id: userId
+      }
+    })
+
+    if (existingPostLike && existingPostLike.is_active) {
+    }else if (existingPostLike && !existingPostLike.is_active) {
+      await this.postLikesRepo.update(
+        { 
+          id: existingPostLike.id
+        },
+        {
+          is_active: true
+        }
+      )
+    }else if (!existingPostLike) {
+      const postLike = this.postLikesRepo.create({
+        user_id: userId,
+        post_id: postId
+      })
+
+      await this.postLikesRepo.save(postLike)
+    }
+
+    const [ _, count ] = await this.postLikesRepo.findAndCount({
+      where: {
+        post_id: postId,
+        is_active: true
+      }
+    });
+
+    await this.postRepo.update(
+      { id: postId },
+      { likes: count }
+    )
+
+    const posts = await this.postRepo.findOne({
+      where: {
+        id: postId
+      }
+    })
+
+    return {
+      status: "success",
+      status_code: 201,
+      message: "Like added",
+      data: posts
     }
   }
 }
