@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { CommunityService } from './community.service';
-import { AddUserToCommunityDto, CreateCommunityDto } from './dto/community.dto';
+import { AddUserToCommunityDto, CreateCommunityDto, CreatePostDto } from './dto/community.dto';
 import { ResponseHelper, ResponseInterface } from 'src/helper/response.helper';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { use } from 'passport';
@@ -94,6 +94,20 @@ export class CommunityController {
   async fetchAllCommunitiesWithUsersStatus(@Param('user_id') userId: string) {
     try {
       const res: ResponseInterface = await this.communityService.fetchAllCommunitiesWithUsersStatus(userId);
+      return ResponseHelper.successResponse(res.message, res.status_code, res.data)
+    } catch(error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR)   
+    }
+  }
+
+  // posts
+  @UseGuards(JwtAuthGuard)
+  @Post('/post/create')
+  async createPost(@Body() createPostDto: CreatePostDto) {
+    try {
+      const { user_id, community_id, content } = createPostDto
+      const res: ResponseInterface = await this.communityService.createPost(user_id, community_id, createPostDto.content);
       return ResponseHelper.successResponse(res.message, res.status_code, res.data)
     } catch(error) {
       console.log(error)

@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 import { CreateCommunityInterface } from './interfaces/community.interfaces';
 import { ResponseInterface } from 'src/helper/response.helper';
 import { UserService } from '../user/user.service';
-
+import { PostService } from '../post/post.service';
 @Injectable()
 export class CommunityService {
   constructor(
@@ -16,7 +16,8 @@ export class CommunityService {
     @InjectRepository(UserCommunity)
     private userCommunityRepo: Repository<UserCommunity>,
 
-    private userService: UserService
+    private userService: UserService,
+    private postService: PostService,
   ){}
 
   async createCommunity(createCommunityInterface: CreateCommunityInterface): Promise<ResponseInterface> {
@@ -176,4 +177,26 @@ export class CommunityService {
       data: communities
     }
   }
+
+  async createPost(userId: string, communityId: string, content: string): Promise<ResponseInterface> {
+    const existingCommunity = await this.communityRepo.findOne({
+      where: {
+        id: communityId
+      }
+    });
+
+    if (!existingCommunity) {
+      throw new HttpException("Community Id is not valid", HttpStatus.BAD_REQUEST);
+    }
+
+    const newPost = await this.postService.createPost(userId, communityId, content)
+
+
+    return {
+      status: "success",
+      status_code: 201,
+      message: "Post created successfully",
+      data: newPost
+    }
+  } 
 }
