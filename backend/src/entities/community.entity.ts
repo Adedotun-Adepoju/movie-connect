@@ -4,7 +4,10 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from "typeorm";
+
+import { UserCommunity } from "./user_communities.entity";
 
 @Entity({ name: "communities"})
 export class Community {
@@ -33,4 +36,7 @@ export class Community {
     default: () => 'CURRENT_TIMESTAMP',
   })
   public updated_at: Date;
+
+  @OneToMany(() => UserCommunity, (userCommunity) => userCommunity.community)
+  user_communities: UserCommunity[]
 }

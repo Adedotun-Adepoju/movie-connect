@@ -9,6 +9,7 @@ import {
   OneToOne,
 } from "typeorm";
 import { EmailVerification } from "./email_verification.entity";
+import { UserCommunity } from "./user_communities.entity";
 
 @Entity({ name: "users"})
 @Unique(['email'])
@@ -46,4 +47,7 @@ export class User {
 
   @OneToOne(() => EmailVerification, (emailVerification) => emailVerification.user)
   emailVerification: EmailVerification
+
+  @OneToMany(() => UserCommunity, (userCommunity) => userCommunity.user)
+  user_communities: UserCommunity[]
 }

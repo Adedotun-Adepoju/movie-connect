@@ -163,4 +163,17 @@ export class CommunityService {
       data: communities
     }
   }
+
+  async fetchAllCommunitiesWithUsersStatus(userId: string): Promise<ResponseInterface> {
+    const communities = await this.communityRepo.createQueryBuilder('communities')
+      .leftJoinAndSelect('communities.user_communities', 'user_communities', 'user_communities.user_id = :user_id', { user_id: userId })
+      .getMany()
+
+    return {
+      status: "success",
+      status_code: 200,
+      message: "Community fetched successfully",
+      data: communities
+    }
+  }
 }

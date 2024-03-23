@@ -5,7 +5,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
-  JoinColumn
+  JoinColumn,
+  OneToMany,
+  ManyToOne
 } from "typeorm";
 
 import { User } from "./user.entity";
@@ -42,11 +44,11 @@ export class UserCommunity {
   })
   public updated_at: Date;
 
-  @OneToOne(() => User)
+  @ManyToOne(() => User, (user) => user.user_communities)
   @JoinColumn({ name: "user_id"})
   user: User
 
-  @OneToOne(() => Community)
+  @ManyToOne(() => Community, (community) => community.user_communities)
   @JoinColumn({ name: "community_id"})
   community: Community
 }
