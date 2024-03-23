@@ -1,6 +1,6 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { CommunityService } from './community.service';
-import { CreateCommunityDto } from './dto/community.dto';
+import { AddUserToCommunityDto, CreateCommunityDto } from './dto/community.dto';
 import { ResponseHelper, ResponseInterface } from 'src/helper/response.helper';
 
 @Controller('community')
@@ -16,7 +16,7 @@ export class CommunityController {
       return ResponseHelper.successResponse(res.message, res.status_code, res.data)
     } catch (error) {
       console.log(error)
-      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
@@ -27,7 +27,7 @@ export class CommunityController {
       return ResponseHelper.successResponse(res.message, res.status_code, res.data)
     } catch(error) {
       console.log(error)
-      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR)   
+      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR)   
     }
   }
 
@@ -39,6 +39,34 @@ export class CommunityController {
     } catch(error) {
       console.log(error)
       throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR)   
+    }
+  }
+
+  @Post('/:community_id/add')
+  async addUserToCommunity(
+    @Param('community_id') communityId: string,
+    @Body() payload: AddUserToCommunityDto
+  ){
+    try {
+      const res: ResponseInterface = await this.communityService.AddUserToCommunity(communityId, payload.user_id);
+      return ResponseHelper.successResponse(res.message, res.status_code, res.data)
+    } catch (error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  @Patch('/:community_id/remove')
+  async deactiveUserFromCommunity(
+    @Param('community_id') communityId: string,
+    @Body() payload
+  ){
+    try {
+      const res: ResponseInterface = await this.communityService.deactiveUserFromCommunity(communityId, payload.user_id);
+      return ResponseHelper.successResponse(res.message, res.status_code, res.data)
+    } catch (error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 }

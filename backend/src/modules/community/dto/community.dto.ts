@@ -5,3 +5,9 @@ export class CreateCommunityDto {
   @IsNotEmpty()
   name: string;
 }
+
+export class AddUserToCommunityDto {
+  @IsString()
+  @IsNotEmpty()
+  user_id: string;
+}
