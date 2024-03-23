@@ -13,6 +13,7 @@ import {
 import { User } from "./user.entity";
 import { Community } from "./community.entity";
 import { PostLikes } from "./post_likes.entity";
+import { PostComment } from "./post_comments.entity";
 
 @Entity({ name: "posts"})
 export class Post {
@@ -22,7 +23,9 @@ export class Post {
   @Column()
   public user_id: string
 
-  @Column()
+  @Column({
+    nullable: true
+  })
   public community_id: string
 
   @Column('text')
@@ -58,4 +61,7 @@ export class Post {
 
   @OneToMany(() => PostLikes, (postLikes) => postLikes.post)
   post_likes: PostLikes[]
+
+  @OneToMany(() => PostComment, (postComment) => postComment.post)
+  post_comments: PostComment[]
 }

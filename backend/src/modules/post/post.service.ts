@@ -5,6 +5,7 @@ import { Like, Repository } from 'typeorm';
 import { Community } from 'src/entities/community.entity';
 import { UserService } from '../user/user.service';
 import { PostLikes } from 'src/entities/post_likes.entity';
+import { PostComment } from 'src/entities/post_comments.entity';
 
 @Injectable()
 export class PostService {
@@ -17,6 +18,9 @@ export class PostService {
 
     @InjectRepository(PostLikes)
     private postLikesRepo: Repository<PostLikes>,
+
+    @InjectRepository(PostComment)
+    private postCommentRepo: Repository<PostComment>,
 
     private userService: UserService,
   ){}
@@ -180,6 +184,49 @@ export class PostService {
       status_code: 201,
       message: "Like added",
       data: posts
+    }
+  }
+
+  async addComment(postId: string, payload) {
+    const newComment = this.postCommentRepo.create({
+      post_id: postId,
+      user_id: payload.user_id,
+      content: payload.content
+    })
+
+    await this.postCommentRepo.save(newComment)
+
+    const [ _, count ] = await this.postCommentRepo.findAndCount({
+      where: {
+        post_id: postId,
+      }
+    });
+
+    await this.postRepo.update(
+      { id: postId },
+      { comments: count }
+    )
+
+    return {
+      status: "success",
+      status_code: 201,
+      message: "Comment added",
+      data: newComment
+    }
+  }
+
+  async fetchPostComments(postId) {
+    const comments = await this.postCommentRepo.find({
+      where: {
+        post_id: postId
+      }
+    })
+
+    return {
+      status: "success",
+      status_code: 201,
+      message: "Comments fetched",
+      data: comments
     }
   }
 }

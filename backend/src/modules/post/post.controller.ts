@@ -84,4 +84,30 @@ export class PostController {
       throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR)   
     }
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/:post_id/comment')
+  async addComment(
+    @Param('post_id') postId: string,
+    @Body() payload) {
+    try {
+      const res: ResponseInterface = await this.postService.addComment(postId, payload);
+      return ResponseHelper.successResponse(res.message, res.status_code, res.data)
+    } catch(error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR)   
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/:post_id/comment')
+  async fetchComments(@Param('post_id') postId: string) {
+    try {
+      const res: ResponseInterface = await this.postService.fetchPostComments(postId);
+      return ResponseHelper.successResponse(res.message, res.status_code, res.data)
+    } catch(error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR)   
+    }
+  }
 }

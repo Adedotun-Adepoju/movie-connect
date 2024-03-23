@@ -12,6 +12,7 @@ import { EmailVerification } from "./email_verification.entity";
 import { UserCommunity } from "./user_communities.entity";
 import { Post } from "./posts.entity";
 import { PostLikes } from "./post_likes.entity";
+import { PostComment } from "./post_comments.entity";
 
 @Entity({ name: "users"})
 @Unique(['email'])
@@ -58,4 +59,7 @@ export class User {
 
   @OneToMany(() => PostLikes, (postLikes) => postLikes.user)
   post_likes: PostLikes[]
+
+  @OneToMany(() => PostComment, (postComment) => postComment.user)
+  post_comments: PostComment[]
 }
