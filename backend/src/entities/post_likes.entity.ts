@@ -12,7 +12,7 @@ import { Post } from "./posts.entity";
 import { User } from "./user.entity";
 
 @Entity({ name: "post_likes"})
-export class PostComment {
+export class PostLikes {
   @PrimaryGeneratedColumn('uuid')
   public id: string
 
@@ -22,11 +22,11 @@ export class PostComment {
   @Column()
   public user_id: string
 
-  @Column('text')
-  public content: string
-
-  @Column()
-  public likes: number
+  @Column({
+    type: "boolean",
+    default: true,
+  })
+  public is_active: boolean
 
   @CreateDateColumn({
     type: 'timestamp',

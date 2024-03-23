@@ -25,10 +25,10 @@ export class Post {
   @Column('text')
   public content: string
 
-  @Column()
+  @Column({ default: 0})
   public likes: number
 
-  @Column()
+  @Column({ default: 0})
   public comments: number
 
   @CreateDateColumn({

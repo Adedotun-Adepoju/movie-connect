@@ -25,7 +25,7 @@ export class PostComment {
   @Column('text')
   public content: string
 
-  @Column()
+  @Column({ default: 0 })
   public likes: number
 
   @CreateDateColumn({

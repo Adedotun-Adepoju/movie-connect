@@ -14,10 +14,10 @@ export class Community {
   @Column()
   public name: string
 
-  @Column()
+  @Column({ default: 0 })
   public posts_count: number
 
-  @Column()
+  @Column({ default: 0})
   public users_count: number
 
   @CreateDateColumn({
