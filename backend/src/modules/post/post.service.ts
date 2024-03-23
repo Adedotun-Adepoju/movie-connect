@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from 'src/entities/posts.entity';
 import { Repository } from 'typeorm';
 import { Community } from 'src/entities/community.entity';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class PostService {
@@ -11,7 +12,9 @@ export class PostService {
     private postRepo: Repository<Post>,
 
     @InjectRepository(Community)
-    private communityRepo: Repository<Community>
+    private communityRepo: Repository<Community>,
+
+    private userService: UserService,
   ){}
 
   async createPost(userId: string, communityId: string, content: string) {
@@ -48,7 +51,12 @@ export class PostService {
       }
     })
 
-    return post;
+    return {
+      status: "success",
+      status_code: 200,
+      message: "Post fetched successfully",
+      data: post
+    }
   }
 
   async fetchAllPosts(){
@@ -58,11 +66,22 @@ export class PostService {
       }
     });
 
-    return posts
+    return {
+      status: "success",
+      status_code: 200,
+      message: "Posts fetched successfully",
+      data: posts
+    }
   }
 
   async fetchPostsByUser(userId: string) {
-    const existingPost = this.postRepo.findOne({
+    const existingUser = await this.userService.findUserById(userId);
+
+    if (!existingUser) {
+      throw new HttpException("User Id is not valid", HttpStatus.BAD_REQUEST);
+    }
+
+    const existingPosts = await this.postRepo.find({
       where: {
         user_id: userId
       },
@@ -71,11 +90,26 @@ export class PostService {
       }
     })
 
-    return existingPost
+    return {
+      status: "success",
+      status_code: 200,
+      message: "Posts retrieved successfully",
+      data: existingPosts
+    }
   }
 
   async fetchPostsByCommunity(communityId: string) {
-    const existingPost = this.postRepo.find({
+    const existingCommunity = await this.communityRepo.findOne({
+      where: {
+        id: communityId
+      }
+    });
+
+    if (!existingCommunity) {
+      throw new HttpException("Community Id is not valid", HttpStatus.BAD_REQUEST);
+    }
+
+    const existingPosts = await this.postRepo.find({
       where: {
         community_id: communityId
       },
@@ -84,6 +118,11 @@ export class PostService {
       }
     })
 
-    return existingPost
+    return {
+      status: "success",
+      status_code: 200,
+      message: "Posts retrieved successfully",
+      data: existingPosts
+    }
   }
 }
