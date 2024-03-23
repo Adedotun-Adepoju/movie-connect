@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Community } from 'src/entities/community.entity';
 import { Repository } from 'typeorm';
@@ -35,6 +35,25 @@ export class CommunityService {
       status_code: 200,
       message: "Communities fetched successfully",
       data: communities
+    }
+  }
+
+  async fetchCommunityById(communityId: string): Promise<ResponseInterface> {
+    const community = await this.communityRepo.findOne({
+      where: {
+        id: communityId
+      }
+    })
+
+    if (!community) {
+      throw new HttpException("No Community with the specified Id", HttpStatus.NOT_FOUND)
+    }
+
+    return {
+      status: "success",
+      status_code: 200,
+      message: "Community fetched successfully",
+      data: community
     }
   }
 }
