@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { CommunityService } from './community.service';
-import { AddUserToCommunityDto, CreateCommunityDto, CreatePostDto } from './dto/community.dto';
+import { AddUserToCommunityDto, CreateCommunityDto } from './dto/community.dto';
 import { ResponseHelper, ResponseInterface } from 'src/helper/response.helper';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { use } from 'passport';
@@ -103,11 +103,46 @@ export class CommunityController {
 
   // posts
   @UseGuards(JwtAuthGuard)
-  @Post('/post/create')
-  async createPost(@Body() createPostDto: CreatePostDto) {
+  @Get('/posts/')
+  async fetchAllPosts() {
     try {
-      const { user_id, community_id, content } = createPostDto
-      const res: ResponseInterface = await this.communityService.createPost(user_id, community_id, createPostDto.content);
+      const res: ResponseInterface = await this.communityService.fetchAllPosts();
+      return ResponseHelper.successResponse(res.message, res.status_code, res.data)
+    } catch(error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR)   
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/posts/:id')
+  async fetchPostsById(@Param('id') userId: string) {
+    try {
+      const res: ResponseInterface = await this.communityService.fetchPostById(userId);
+      return ResponseHelper.successResponse(res.message, res.status_code, res.data)
+    } catch(error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR)   
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/:community_id/posts')
+  async fetchPostsByCommunity(@Param('community_id') communityId: string) {
+    try {
+      const res: ResponseInterface = await this.communityService.fetchPostsByCommunity(communityId);
+      return ResponseHelper.successResponse(res.message, res.status_code, res.data)
+    } catch(error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR)   
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/user/:user_id/posts/')
+  async fetchPostsByUser(@Param('user_id') userId: string) {
+    try {
+      const res: ResponseInterface = await this.communityService.fetchPostsByUser(userId);
       return ResponseHelper.successResponse(res.message, res.status_code, res.data)
     } catch(error) {
       console.log(error)

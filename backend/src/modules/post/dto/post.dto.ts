@@ -1,13 +1,14 @@
 import { IsString, IsEmail, IsNotEmpty, isString, isNotEmpty } from "class-validator";
 
-export class CreateCommunityDto {
+export class CreatePostDto {
   @IsString()
-  @IsNotEmpty()
-  name: string;
-}
+  community_id: string;
 
-export class AddUserToCommunityDto {
   @IsString()
   @IsNotEmpty()
   user_id: string;
+
+  @IsString()
+  @IsNotEmpty()
+  content: string;
 }

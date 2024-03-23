@@ -10,6 +10,7 @@ import {
 } from "typeorm";
 import { EmailVerification } from "./email_verification.entity";
 import { UserCommunity } from "./user_communities.entity";
+import { Post } from "./posts.entity";
 
 @Entity({ name: "users"})
 @Unique(['email'])
@@ -50,4 +51,7 @@ export class User {
 
   @OneToMany(() => UserCommunity, (userCommunity) => userCommunity.user)
   user_communities: UserCommunity[]
+
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[]
 }

@@ -178,7 +178,29 @@ export class CommunityService {
     }
   }
 
-  async createPost(userId: string, communityId: string, content: string): Promise<ResponseInterface> {
+  async fetchPostById(postId: string) {
+    const existingPost = await this.postService.fetchPostById(postId);
+
+    return {
+      status: "success",
+      status_code: 200,
+      message: "Post fetched successfully",
+      data: existingPost
+    }
+  }
+
+  async fetchAllPosts() {
+    const posts = await this.postService.fetchAllPosts();
+
+    return {
+      status: "success",
+      status_code: 200,
+      message: "Posts fetched successfully",
+      data: posts
+    }
+  }
+
+  async fetchPostsByCommunity(communityId: string) {
     const existingCommunity = await this.communityRepo.findOne({
       where: {
         id: communityId
@@ -189,14 +211,30 @@ export class CommunityService {
       throw new HttpException("Community Id is not valid", HttpStatus.BAD_REQUEST);
     }
 
-    const newPost = await this.postService.createPost(userId, communityId, content)
-
+    const posts = await this.postService.fetchPostsByCommunity(communityId)
 
     return {
       status: "success",
-      status_code: 201,
-      message: "Post created successfully",
-      data: newPost
+      status_code: 200,
+      message: "Posts retrieved successfully",
+      data: posts
     }
-  } 
+  }
+
+  async fetchPostsByUser(userId: string) {
+    const existingUser = await this.userService.findUserById(userId);
+
+    if (!existingUser) {
+      throw new HttpException("User Id is not valid", HttpStatus.BAD_REQUEST);
+    }
+
+    const posts = await this.postService.fetchPostsByUser(userId)
+
+    return {
+      status: "success",
+      status_code: 200,
+      message: "Posts retrieved successfully",
+      data: posts
+    }
+  }
 }

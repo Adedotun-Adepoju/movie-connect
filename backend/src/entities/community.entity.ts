@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 
 import { UserCommunity } from "./user_communities.entity";
+import { Post } from "./posts.entity";
 
 @Entity({ name: "communities"})
 export class Community {
@@ -39,4 +40,7 @@ export class Community {
 
   @OneToMany(() => UserCommunity, (userCommunity) => userCommunity.community)
   user_communities: UserCommunity[]
+
+  @OneToMany(() => Post, (post) => post.community)
+  posts: Post[]
 }
