@@ -30,7 +30,13 @@ export class UserService {
     return user
   }
 
-  async findUserById() {
-    
+  async findUserById(id: string): Promise<User> {
+    const user = await this.userRepo.findOne({
+      where: {
+        id: id
+      }
+    });
+
+    return user  
   }
 }
