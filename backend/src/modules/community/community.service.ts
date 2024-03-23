@@ -146,4 +146,21 @@ export class CommunityService {
       data: []
     }
   }
+
+  async fetchUserCommunities(userId: string): Promise<ResponseInterface> {
+    const communities = await this.userCommunityRepo.find({
+      where: {
+        user_id: userId,
+        is_active: true
+      },
+      relations: ["community"]
+    })
+    
+    return {
+      status: "success",
+      status_code: 200,
+      message: "Community fetched successfully",
+      data: communities
+    }
+  }
 }

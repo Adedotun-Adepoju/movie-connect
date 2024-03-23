@@ -69,4 +69,15 @@ export class CommunityController {
       throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
+
+  @Get('/user/:user_id')
+  async fetchUserCommunities(@Param('user_id') userId: string) {
+    try {
+      const res: ResponseInterface = await this.communityService.fetchUserCommunities(userId);
+      return ResponseHelper.successResponse(res.message, res.status_code, res.data)
+    } catch(error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR)   
+    }
+  }
 }
