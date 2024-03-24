@@ -12,6 +12,7 @@ const config: Config = {
         sfpro: ["var(--font-sfpro)"],
         mont: ["var(--font-mont)"],
         pacifico: ["var(--font-pacifico)"],
+        inter: ["var(--font-inter)"],
       },
       colors: {
         primary: "#b71c1c",

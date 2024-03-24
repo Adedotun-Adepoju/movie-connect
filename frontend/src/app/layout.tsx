@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Montserrat, Pacifico } from "next/font/google";
+import { Inter, Montserrat, Pacifico } from "next/font/google";
 import Local from "next/font/local";
 import "@/styles/globals.css";
 import { cx } from "@/utils";
@@ -32,6 +32,12 @@ const mont = Montserrat({
   variable: "--font-mont",
 });
 
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
+
 const pacifico = Pacifico({
   subsets: ["latin"],
   weight: "400",
@@ -56,6 +62,7 @@ export default function RootLayout({
           mont.variable,
           sfpro.variable,
           pacifico.variable,
+          inter.variable,
           "bg-bg-color font-mont",
         )}
       >
