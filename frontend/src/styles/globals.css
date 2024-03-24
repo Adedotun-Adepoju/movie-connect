@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+.active {
+  @apply relative text-primary;
+}
+
+.active::after {
+  @apply absolute -bottom-2 left-0 block h-0.5 w-full bg-primary;
+  content: "";
+}
+
+
+/* Forms ------------------------------------------------------------------- */
 .input_field {
   @apply w-full rounded-lg bg-gray-fill px-5 py-3 text-dark transition-all duration-200 focus:border-dark focus:outline-none;
 }
@@ -18,7 +29,7 @@
 }
 
 .input_field_checkmark {
-  @apply pointer-events-none absolute hidden h-5 w-5 stroke-white outline-none peer-checked:block
+  @apply pointer-events-none absolute hidden h-5 w-5 stroke-white outline-none peer-checked:block;
 }
 
 .input_submit {
