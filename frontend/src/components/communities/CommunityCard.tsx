@@ -1,4 +1,5 @@
 import { formatCommunityMembers, getTimeAgo } from "@/utils";
+import Image from "next/image";
 
 interface CommunityCardProps {
   community: {
@@ -17,10 +18,12 @@ const CommunityCard = ({ community, member, handleJoin }: CommunityCardProps) =>
     <div className="mt-6">
       <div className="flex items-center justify-between">
         <div className="mr-4 flex items-center">
-          <img
+          <Image
             src="https://via.placeholder.com/150"
             alt="Community"
             className="h-12 w-12 rounded-md"
+            width={48}
+            height={48}
           />
           <div className="ml-4">
             <h3 className="font-semibold">{community.name}</h3>
